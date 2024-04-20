@@ -1,0 +1,54 @@
+.registration {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    border: 1px solid hsl(0, 0, 80);
+    background-color: hsla(0, 2%, 80%, 0.913);
+    border-radius: 10px;
+    padding: 60px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    max-width: 90%;
+}
+
+.registration .label {
+    display: block;
+    font-size: larger;
+    padding: 5px;
+}
+
+.registration .input {
+    color: black;
+    padding: 5px;
+    margin: 2px;
+}
+
+.registration .success {
+    border-radius: 10px;
+    background-color: lightblue; 
+    color: black; 
+    width: fit-content; 
+    height: 60%; 
+    padding: 5px; 
+}
+
+.registration .error {
+    border-radius: 10px;
+    background-color: red; 
+    color: white; 
+    width: fit-content; 
+    height: 60%; 
+    padding: 5px; 
+}
+
+.registration .messages { 
+    display: block; 
+    justify-content: center; 
+}
+
+.registration .submit {
+    margin-top: 25px;
+    margin-bottom: auto;
+}

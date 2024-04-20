@@ -1,0 +1,16 @@
+GET http://localhost:3000/athletes
+
+###
+
+GET http://localhost:3000/athletes/12
+
+###
+
+POST http://localhost:3000/athletes 
+Content-Type: application/json
+
+{
+    "name": "test user",
+    "email": "testuser@gmail.com",
+    "password": "password"
+}
