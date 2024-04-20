@@ -33,8 +33,10 @@ router.post('/', async (req, res) => {
 })
 
 //update one
-router.patch('/', (req, res) => {
-
+router.patch('/', async (req, res) => {
+    var updateObject = req.body;
+    var id = req.params.id;
+    db.users.update({_id : ObjectId(id)}, {$set: updateObject})
 })
 
 //delete one
