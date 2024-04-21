@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Athlete = require('../models/athlete')
+//const athlete = require('../models/athlete')
 
 //get all
 router.get('/', async (req, res) => {
@@ -13,8 +14,8 @@ router.get('/', async (req, res) => {
 })
 
 //get one
-router.get('/:id', (req, res) => {
-    res.send(req.params.id)
+router.get('/:id', getAthlete, (req, res) => {
+    res.json(res.athlete)
 })
 
 //create one
@@ -33,15 +34,46 @@ router.post('/', async (req, res) => {
 })
 
 //update one
-router.patch('/', async (req, res) => {
-    var updateObject = req.body;
-    var id = req.params.id;
-    db.users.update({_id : ObjectId(id)}, {$set: updateObject})
+router.patch('/:id', getAthlete, async (req, res) => {
+    if (req.body.name != null) {
+        res.athlete.name = req.body.name
+    }
+
+    if (req.body.email != null) {
+        res.athlete.email = req.body.email
+    }
+
+    try {
+        const updatedAthlete = await res.athlete.save()
+        res.json(updatedAthlete)
+    } catch(err) {
+        res.status(400).json({ message: err.message })
+    }
 })
 
 //delete one
-router.delete('/:id', (req, res) => {
-
+router.delete('/:id', getAthlete,  async (req, res) => {
+    try {
+        await res.athlete.deleteOne()
+        res.json({ message: "Deleted athlete" })
+    } catch (err) {
+        res.status(500).json({ mesage: err.message })
+    }
 })
+
+async function getAthlete(req, res, next) {
+    let athlete
+    try {
+        athlete = await Athlete.findById(req.params.id)
+        if (athlete == null) {
+            return res.status(404).json({ message: "Cannot find athlete" })
+        }
+    } catch (err) {
+        return res.status(500).json({ message: err.message })
+    }
+
+    res.athlete = athlete
+    next()
+}
 
 module.exports = router
