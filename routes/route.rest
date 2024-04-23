@@ -1,16 +1,16 @@
-GET http://localhost:3000/athletes
+GET http://localhost:3000/athletes/6615ed755761f52b353965a8
 
 ###
 
 GET http://localhost:3000/athletes/66254c27f10495a7ebbeca59e
 ###
 
-POST http://localhost:3000/athletes 
+POST http://localhost:3000/athletes/
 Content-Type: application/json
 
 {
-    "name": "test user",
-    "email": "testuser@gmail.com",
+    "name": "Perry The Platypus",
+    "email": "chaom@gmail.com",
     "password": "password"
 }
 

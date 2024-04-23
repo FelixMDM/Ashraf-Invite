@@ -1,39 +1,41 @@
 import Header from "./Header.jsx"
 import Footer from "./Footer.jsx"
-import Card from "./Card/Card.jsx"
 import Form from "./Form/Form.jsx"
 import Title from "./Title/Title.jsx"
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import axios from 'axios';
 import "../App.css"
 
 function App() {  
 
-  const [names, setNames] = useState([])
+  const [testData, setTestData] = useState("test")
 
-  useEffect(() => {
-    fetchNames()
-  }, [])
+  const fetchNames = (e) => {
+    e.preventDefault()
+    fetch('http://localhost:3000/athletes/6615ed755761f52b353965a8', {
+      mode: 'cors'
+    })
+      .then(res => {
+        if (res.ok) {
+          console.log('SUCCESS')
+          return res.json()
+        } else {
+          console.log('Not Successful')
+        }
+      })
+      .then(data => {
+        console.log(data)
+        setTestData(data.name)
+      })
+      .catch(error => console.log({ message: error.message }))
+  }
 
-  const fetchNames = async () => {
-    try {
-      const res = await fetch('/athletes/')
-      const data = await res.json()
-      setNames(data.map(athlete => athlete.name))
-    } catch(err) {
-      console.error('Error fetching names: ', err)
-    }
-  }
-  
-  const namesAsLIs = () => {
-    return names.map((n, index) => <li key={index}>{n}</li>)
-  }
-  
   const ref = useRef(null);
 
   const handleClick = () => {
-    ref.current?.scrollIntoView({ behavior: 'smooth' });
+    // ref.current?.scrollIntoView({ behavior: 'smooth' });
     console.log("test");
   }
 
@@ -46,9 +48,9 @@ function App() {
       </div>
       <Form ref={ref}/>
       <h1>Test Testing</h1>
-      <ul>
-        {namesAsLIs()}
-      </ul>
+      <p>
+        {testData}
+      </p>
       <button onClick={fetchNames}>Update List</button>
       <Footer/>
     </>
