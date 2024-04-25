@@ -16,7 +16,7 @@ function App() {
   const [email, setEmail] = useState('')
   const [testData, setTestData] = useState("test")
 
-  const fetchNames = (e) => {
+  const fetchNames = (e) => { // get request
     e.preventDefault()
     fetch('http://localhost:3000/athletes/6615ed755761f52b353965a8', {
       mode: 'cors'
@@ -34,6 +34,25 @@ function App() {
         setTestData(data.name)
       })
       .catch(error => console.log({ message: error.message }))
+  }
+
+  const postNames = (e) => { // post
+    e.preventDefault()
+    fetch('http://localhost:3000/athletes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }, 
+        body: JSON.stringify({
+        name: 'Iggy',
+        email: 'iggymail@gmail.com',
+        password: 'iggypassword'
+      })
+    }).then(res => {
+      return res.json()
+    })
+    .then(data => console.log(data))
+    .catch(error => console.log('ERROR'))
   }
 
   return(
@@ -55,7 +74,7 @@ function App() {
       <p>
         {testData}
       </p>
-      <button onClick={fetchNames}>Update List</button>
+      <button onClick={postNames}>Update List</button>
       <Footer/>
     </>
   );
