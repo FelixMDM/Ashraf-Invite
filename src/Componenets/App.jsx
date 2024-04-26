@@ -69,7 +69,6 @@ function App() {
           </Routes>
         </BrowserRouter>
       </div>
-      <Form/>
       <h1>Test Testing</h1>
       <p>
         {testData}

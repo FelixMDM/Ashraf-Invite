@@ -18,20 +18,18 @@ function Home(props) {
         <div className={styles.mainContainer}>
             <div className={styles.titleContainer}>
                 <div>
-                    Welcome!
+                    Login in or Create Account
                 </div>
             </div>
-            <div>
-                This is the home page
-            </div>
             <div className={styles.buttonContainer}>
-                <input 
-                    className={styles.inputButton}
-                    type='button'
-                    onClick={onButtonClick}
-                    value={loggedIn ? 'Log out' : 'Log in'}
-                />
-                {loggedIn ? <div>Your email address is {email}</div> : <div/> }
+                <div className={styles.entry}>
+                    <button>
+                        Log In
+                    </button>
+                    <button>
+                        Sign Up
+                    </button>
+                </div>
             </div>
         </div>
     )

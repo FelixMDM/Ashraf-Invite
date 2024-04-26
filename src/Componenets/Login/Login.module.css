@@ -3,7 +3,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 25%;
+
+    border: 1px solid hsl(0, 0, 80);
+    background-color: hsla(0, 2%, 80%, 0.913);
+    border-radius: 10px;
+    padding: 70px;
+    padding-top: 30px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    max-width: 25%;
 }
   
 .titleContainer {
@@ -13,6 +23,7 @@
     font-weight: bolder;
     align-items: center;
     justify-content: center;
+    margin-bottom: 0 auto;
 }
   
 .resultContainer .historyItem {
@@ -59,4 +70,12 @@
     border-radius: 8px;
     border: 1px solid grey;
     padding-left: 8px;
+}
+
+.entry {
+    display: flex;
+    flex-direction: row;
+    margin-top: auto;
+    padding: 0;
+    justify-content: space-between;
 }
