@@ -8,6 +8,7 @@ import Form from './Form/Form.jsx'
 import Title from './Title/Title.jsx'
 import Home from './Login/Home.jsx'
 import LoginPage from './Login/LoginPage.jsx'
+import LoginSignup from './LoginSignup/LoginSignup.jsx';
 import '../App.css'
 
 function App() {  
@@ -64,8 +65,7 @@ function App() {
       <div className='loginPage'>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
-            <Route path="/login" element={<LoginPage setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
+            <Route path="/" element={<LoginSignup/>} />
           </Routes>
         </BrowserRouter>
       </div>
