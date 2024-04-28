@@ -8,7 +8,20 @@ const athleteSchema = new mongoose.Schema({
 
     email: {
         type: String,
-        required: true
+        validate: {
+            validator: async function(email) {
+                const user = await this.constructor.findOne({email})
+                if(user) {
+                    if(this.id === user.id) {
+                        return true
+                    }
+                    return false
+                }
+                return true
+            },
+            message: props => 'Email has already been taken.',
+        },
+        required: [true, 'Email required']    
     }, 
 
     password: {

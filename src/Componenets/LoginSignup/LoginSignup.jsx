@@ -28,27 +28,27 @@ function LoginSignup(props) {
 
     //functional login methods
     const loginFunc = (e) => {
-        setAction('Sign Up')
+        setAction('Login')
         handleLogIn(e)
     }
 
     const signUpFunc = (e) => {
-        setAction('Login')
+        setAction('Sign Up')
         handleSignUp(e)
     }
 
-    const postProfile = (e) => {
+    const postNames = (e) => { // post
         e.preventDefault()
         fetch('http://localhost:3000/athletes', {
             method: 'POST',
             headers: {
-                'Content-Type': 'applications/json'
+                'Content-Type': 'application/json'
             }, 
                 body: JSON.stringify({
-                    name: {userName},
-                    email: {userEmail},
-                    password: {userPassword}
-                })  
+                name: userName,
+                email: userEmail,
+                password: userPassword
+            })
         }).then(res => {
             return res.json()
         })
@@ -82,9 +82,9 @@ function LoginSignup(props) {
             //debugging
             console.log("Did not sign in")
         } else {
-            postProfile(userName, userEmail, userPassword)
+            postNames(e)
             setSubmitted(true)
-            setError(true)
+            setError(false)
 
             //debugging
             console.log('Signed In')
@@ -129,8 +129,8 @@ function LoginSignup(props) {
                     <span> Click Here</span>
                 </div> }
             <div className={styles.submitContainer}>
-                <div className={action == 'Login' ? styles.submitGray : styles.submit} onClick={loginFunc}>Sign Up</div>
-                <div className={action == 'Sign Up' ? styles.submitGray : styles.submit} onClick={signUpFunc}>Login</div>
+                <div className={action == 'Login' ? styles.submitGray : styles.submit} onClick={signUpFunc}>Sign Up</div>
+                <div className={action == 'Sign Up' ? styles.submitGray : styles.submit} onClick={loginFunc}>Login</div>
             </div>
         </div>
     );
