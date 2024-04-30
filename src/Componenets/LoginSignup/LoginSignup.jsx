@@ -10,6 +10,7 @@ function LoginSignup(props) {
     const [userName, setUserName] = useState('')
     const [userEmail, setUserEmail] = useState('')
     const [userPassword, setUserPassword] = useState('')
+    const [userData, setUserData] = useState(null)
     const [error, setError] = useState(false)
     const [submited, setSubmitted] = useState(false)
 
@@ -97,6 +98,10 @@ function LoginSignup(props) {
                 <div className={styles.text}>{action}</div>
                 <div className={styles.underline}></div>
             </div>
+            {error == true ? <div/> :
+                    <div className={styles.error}>
+                        {userData}
+                    </div> }
             <div className={styles.inputs}>
                 {action == 'Login' ? <div/> :
                     <div className={styles.input}>

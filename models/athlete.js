@@ -1,5 +1,10 @@
 const mongoose = require('mongoose')
 
+const validateEmail = function(email) {
+    var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+    return re.test(email)
+}
+
 const athleteSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -8,22 +13,26 @@ const athleteSchema = new mongoose.Schema({
 
     email: {
         type: String,
-        validate: {
-            validator: async function(email) {
-                const user = await this.constructor.findOne({email})
-                if(user) {
-                    if(this.id === user.id) {
-                        return true
+        required: [true, 'Email required'],   
+        validate: [
+            {
+                validator: async function(email) {
+                    const user = await this.constructor.findOne({email})
+                    if(user) {
+                        if(this.id === user.id) {
+                            return true
+                        }
+                        return false
                     }
-                    return false
-                }
-                return true
+                    return true
+                },
+                message: props => 'Email has already been taken.'
+            }, 
+            {
+                validator: validateEmail, msg: 'Please enter a valid email'
             },
-            message: props => 'Email has already been taken.',
-        },
-        required: [true, 'Email required']    
+        ]
     }, 
-
     password: {
         type: String,
         required: true
