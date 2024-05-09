@@ -14,6 +14,8 @@ function LoginSignup(props) {
     const [error, setError] = useState(false)
     const [submited, setSubmitted] = useState(false)
 
+    const[test, setTest] = useState([])
+
     //getter login methods
     const handleName = (e) => {
         setUserName(e.target.value)
@@ -56,6 +58,8 @@ function LoginSignup(props) {
         .then(data => console.log(data))
         .catch(error => console.log('ERROR'))
     }
+
+    
 
     const handleLogIn = (e) => {
         e.preventDefault()

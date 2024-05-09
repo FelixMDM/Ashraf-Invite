@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
+const bcyrpt = require('bcrypt')
 const Athlete = require('../models/athlete')
-//const athlete = require('../models/athlete')
 
 //get all
 router.get('/', async (req, res) => {
@@ -14,18 +14,19 @@ router.get('/', async (req, res) => {
 })
 
 //get one
-router.get('/:id', getAthlete, (req, res) => {
+router.get('/:email', getAthlete, (req, res) => {
     res.json(res.athlete)
 })
 
 //create one
 router.post('/', async (req, res) => {
-    const athlete = new Athlete({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password
-    })
     try {
+        const hashedPassword = await bcyrpt.hash(req.body.password, 10)
+        const athlete = new Athlete({
+            name: req.body.name,
+            email: req.body.email,
+            password: hashedPassword
+        })
         const newAthlete = await athlete.save()
         res.status(201).json(newAthlete)
     } catch (err) {
@@ -33,8 +34,26 @@ router.post('/', async (req, res) => {
     }
 })
 
+//validate user login via post request
+router.post('/login', async (req, res) => {
+    try {
+        const email = req.body.email
+        const user = await Athlete.findOne({ email: email })
+
+        if(user == null) { return res.status(400).send('Cannot find user') }
+
+        if(await bcyrpt.compare(req.body.password, user.password)) {
+            res.send('Success')
+        } else {
+            res.send('Not allowed')
+        }
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
+})
+
 //update one
-router.patch('/:id', getAthlete, async (req, res) => {
+router.patch('/:email', getAthlete, async (req, res) => {
     if (req.body.name != null) {
         res.athlete.name = req.body.name
     }
@@ -61,6 +80,7 @@ router.delete('/:id', getAthlete,  async (req, res) => {
     }
 })
 
+///getter function user id
 async function getAthlete(req, res, next) {
     let athlete
     try {
